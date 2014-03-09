@@ -1,10 +1,12 @@
 <html>
   <head>
     <title>{% block title %}{% endblock %}</title>
+    {% load staticfiles %}
     <link rel='stylesheet'
           type='text/css'
-          href='stylesheets/bootstrap/bootstrap.min.css'>
-    <script src='javascripts/bootstrap.min.js'>
+          href='{% static "stylesheets/bootstrap/bootstrap.min.css" %}' />
+    <script src='{% static "javascripts/bootstrap/bootstrap.min.js" %}'>
+    </script>
   </head>
 
   <body>
