@@ -2,11 +2,20 @@
 
 {% block title %}Listado de altas{% endblock %}
 
-{% block content %}
+{% block stylesheets %}
   {% load staticfiles %}
   <link rel='stylesheet'
         type='text/css'
         href='{% static "stylesheets/discharger/discharge_list.css" %}' />
+{% endblock %}
+
+{% block javascripts %}
+  {% load staticfiles %}
+  <script src='{% static "javascripts/discharger/discharge_list.js" %}'>
+  </script>
+{% endblock %}
+
+{% block content %}
   <div class='panel panel-primary'>
     <div class='panel-heading'>
       <h1>Listado de altas</h3>
