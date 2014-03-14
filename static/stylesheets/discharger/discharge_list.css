@@ -41,7 +41,6 @@
 }
 
 .progress-bar{
-  color: black;
   padding: 5px 0 0 0;
 }
 
@@ -76,6 +75,7 @@
 }
 
 .td-progress > .progress > .progress-bar{
+  color: black;
   font-size: 80%;
 }
 

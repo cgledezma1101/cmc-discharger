@@ -15,6 +15,20 @@ function incrementTimers(){
       (timer_hours < 10 ? "0" + timer_hours : timer_hours) + ":" +
       (timer_minutes < 10 ? "0" + timer_minutes : timer_minutes) + ":" +
       (timer_seconds < 10 ? "0" + timer_seconds : timer_seconds);
+
+    // Determine the color of the bar
+    if(0 <= seconds_waiting && seconds_waiting < 2 * 3600){
+      bar.addClass('progress-bar-success');
+    } else if(2 * 3600 <= seconds_waiting && seconds_waiting < 4 * 3600){
+      bar.removeClass('progress-bar-success');
+      bar.addClass('progress-bar-warning');
+    } else if(4 * 3600 <= seconds_waiting && seconds_waiting < 6 * 3600){
+      bar.removeClass('progress-bar-warning');
+      bar.addClass('progress-bar-danger');
+    } else {
+      bar.removeClass('progress-bar-danger');
+      bar.css('background', 'black');
+    }
     
     bar.data('time', seconds_waiting);
     bar.text(timer);
