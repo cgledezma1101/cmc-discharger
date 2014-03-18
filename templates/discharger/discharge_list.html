@@ -5,6 +5,10 @@
   Parameters:
     [list<Discharge>] discharges A list of all the discharges that will be
       displayed
+    [list<Stage>] stages A list of all the stages that a discharge has to go
+      through
+    [int] stage_size The size in pixels that a stage's navigation bar should
+      occupy
 {% endcomment %}
 
 {% block title %}Listado de altas{% endblock %}
@@ -50,66 +54,30 @@
                   Some content with more characters <br />
                   And a line break
                 </div>
-                <div class='progress first' style='width: 100px;'>
-                  <div class='progress-bar'
-                       role='progressbar'
-                       aria-volumenow='0'
-                       aria-volumemin='0'
-                       aria-volumemax='100'
-                       style='width: 0%'>
-                    <p class='stage-name'>
-                      Dosis / Despacho
-                    </p>
-                  </div>
-                </div>
-                <div class='progress' style='width: 100px;'>
-                  <div class='progress-bar'
-                       role='progressbar'
-                       aria-volumenow='0'
-                       aria-volumemin='0'
-                       aria-volumemax='100'
-                       style='width: 0%'>
-                    <p class='stage-name'>
-                      Facturación
-                    </p>
-                  </div>
-                </div>
-                <div class='progress' style='width: 100px;'>
-                  <div class='progress-bar'
-                       role='progressbar'
-                       aria-volumenow='0'
-                       aria-volumemin='0'
-                       aria-volumemax='100'
-                       style='width: 0%'>
-                    <p class='stage-name'>
-                      Seguro
-                    </p>
-                  </div>
-                </div>
-                <div class='progress' style='width: 100px;'>
-                  <div class='progress-bar'
-                       role='progressbar'
-                       aria-volumenow='0'
-                       aria-volumemin='0'
-                       aria-volumemax='100'
-                       style='width: 0%'>
-                    <p class='stage-name'>
-                      Salida
-                    </p>
-                  </div>
-                </div>
-                <div class='progress last' style='width: 100px;'>
-                  <div class='progress-bar'
-                       role='progressbar'
-                       aria-volumenow='0'
-                       aria-volumemin='0'
-                       aria-volumemax='100'
-                       style='width: 0%'>
-                    <p class='stage-name'>
-                      Hotelería
+                {% for stage in stages %}
+                  <div 
+                    {% if forloop.first %}
+                      class='progress first'
+                    {% else %}
+                      {% if forloop.last %}
+                        class='progress last'
+                      {% else %}
+                        class='progress'
+                      {% endif %}
+                    {% endif %}
+                       style='width: {{ stage_size }}px;'>
+                    <div class='progress-bar'
+                         role='progressbar'
+                         aria-volumenow='0'
+                         aria-volumemin='0'
+                         aria-volumemax='100'
+                         style='width: 0%'>
+                      <p class='stage-name'>
+                        {{ stage.name }}
                       </p>
+                    </div>
                   </div>
-                </div>
+                {% endfor %}
               </td>
 
               <td class='td-time'>
