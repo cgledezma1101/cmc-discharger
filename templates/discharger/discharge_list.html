@@ -1,4 +1,11 @@
 {% extends "base.html" %}
+{% comment %}
+  This view displays the list of discharges that haven't ended.
+
+  Parameters:
+    [list<Discharge>] discharges A list of all the discharges that will be
+      displayed
+{% endcomment %}
 
 {% block title %}Listado de altas{% endblock %}
 
@@ -16,6 +23,7 @@
 {% endblock %}
 
 {% block content %}
+  {% load helper_filters %}
   <div class='panel panel-primary'>
     <div class='panel-heading'>
       <h1>Listado de altas</h3>
@@ -31,306 +39,91 @@
             <th>TIEMPO DE ALTA</th>
           </tr>
 
-          <tr>
-            <td>A380</td>
+          {% for discharge in discharges %}
+            <tr>
+              <td>{{ discharge.location }}</td>
 
-            <td>Carlos Ledezma</td>
+              <td>{{ discharge.patient_name }}</td>
 
-            <td class='td-progress'>
-              <div class='arrow_box'>
-                Some content with more characters <br />
-                And a line break
-              </div>
-              <div class='progress first' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                  <p class='stage-name'>
-                    Dosis / Despacho
-                  </p>
+              <td class='td-progress'>
+                <div class='arrow_box'>
+                  Some content with more characters <br />
+                  And a line break
                 </div>
-              </div>
-              <div class='progress' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                  <p class='stage-name'>
-                    Facturación
-                  </p>
-                </div>
-              </div>
-              <div class='progress' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                  <p class='stage-name'>
-                    Seguro
-                  </p>
-                </div>
-              </div>
-              <div class='progress' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                  <p class='stage-name'>
-                    Salida
-                  </p>
-                </div>
-              </div>
-              <div class='progress last' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                  <p class='stage-name'>
-                    Hotelería
+                <div class='progress first' style='width: 100px;'>
+                  <div class='progress-bar'
+                       role='progressbar'
+                       aria-volumenow='0'
+                       aria-volumemin='0'
+                       aria-volumemax='100'
+                       style='width: 0%'>
+                    <p class='stage-name'>
+                      Dosis / Despacho
                     </p>
+                  </div>
                 </div>
-              </div>
-            </td>
+                <div class='progress' style='width: 100px;'>
+                  <div class='progress-bar'
+                       role='progressbar'
+                       aria-volumenow='0'
+                       aria-volumemin='0'
+                       aria-volumemax='100'
+                       style='width: 0%'>
+                    <p class='stage-name'>
+                      Facturación
+                    </p>
+                  </div>
+                </div>
+                <div class='progress' style='width: 100px;'>
+                  <div class='progress-bar'
+                       role='progressbar'
+                       aria-volumenow='0'
+                       aria-volumemin='0'
+                       aria-volumemax='100'
+                       style='width: 0%'>
+                    <p class='stage-name'>
+                      Seguro
+                    </p>
+                  </div>
+                </div>
+                <div class='progress' style='width: 100px;'>
+                  <div class='progress-bar'
+                       role='progressbar'
+                       aria-volumenow='0'
+                       aria-volumemin='0'
+                       aria-volumemax='100'
+                       style='width: 0%'>
+                    <p class='stage-name'>
+                      Salida
+                    </p>
+                  </div>
+                </div>
+                <div class='progress last' style='width: 100px;'>
+                  <div class='progress-bar'
+                       role='progressbar'
+                       aria-volumenow='0'
+                       aria-volumemin='0'
+                       aria-volumemax='100'
+                       style='width: 0%'>
+                    <p class='stage-name'>
+                      Hotelería
+                      </p>
+                  </div>
+                </div>
+              </td>
 
-            <td class='td-time'>
-              <div class='progress progress-striped active'>
-                <div class='progress-bar time-in-process'
-                     data-time='21597'
-                     style='width: 100%'>
+              <td class='td-time'>
+                <div class='progress progress-striped active'>
+                  <div 
+                    class='progress-bar time-in-process'
+                    data-time=
+                      '{{ discharge.start_time | seconds_from }}'
+                    style='width: 100%'>
+                  </div>
                 </div>
-              </div>
-            </td>
-          </tr>
-
-          <tr>
-            <td>A380</td>
-
-            <td>Carlos Ledezma</td>
-
-            <td class='td-progress'>
-              <div class='arrow_box'>
-                Some content with more characters
-              </div>
-              <div class='progress first' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                  <p class='stage-name'>
-                    Dosis / Despacho
-                  </p>
-                </div>
-              </div>
-              <div class='progress' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                  Facturación
-                </div>
-              </div>
-              <div class='progress' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                    Seguro
-                </div>
-              </div>
-              <div class='progress' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                   Salida
-                </div>
-              </div>
-              <div class='progress last' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                  Hotelería
-                </div>
-              </div>
-            </td>
-
-            <td class='td-time'>
-              <div class='progress progress-striped active'>
-                <div class='progress-bar time-in-process'
-                     data-time='7197'
-                     style='width: 100%'>
-                </div>
-              </div>
-            </td>
-          </tr>
-
-          <tr>
-            <td>A380</td>
-
-            <td>Carlos Ledezma</td>
-
-            <td class='td-progress'>
-              <div class='arrow_box'>
-                Some content with more characters
-              </div>
-              <div class='progress first' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                  <p class='stage-name'>
-                    Dosis / Despacho
-                  </p>
-                </div>
-              </div>
-              <div class='progress' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                  Facturación
-                </div>
-              </div>
-              <div class='progress' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                    Seguro
-                </div>
-              </div>
-              <div class='progress' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                   Salida
-                </div>
-              </div>
-              <div class='progress last' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                  Hotelería
-                </div>
-              </div>
-            </td>
-
-            <td class='td-time'>
-              <div class='progress progress-striped active'>
-                <div class='progress-bar time-in-process'
-                     data-time='0'
-                     style='width: 100%'>
-                </div>
-              </div>
-            </td>
-          </tr>
-
-          <tr>
-            <td>A380</td>
-
-            <td>Carlos Ledezma</td>
-
-            <td class='td-progress'>
-              <div class='arrow_box'>
-                Some content with more characters
-              </div>
-              <div class='progress first' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                  <p class='stage-name'>
-                    Dosis / Despacho
-                  </p>
-                </div>
-              </div>
-              <div class='progress' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                  Facturación
-                </div>
-              </div>
-              <div class='progress' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                    Seguro
-                </div>
-              </div>
-              <div class='progress' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                   Salida
-                </div>
-              </div>
-              <div class='progress last' style='width: 100px;'>
-                <div class='progress-bar'
-                     role='progressbar'
-                     aria-volumenow='0'
-                     aria-volumemin='0'
-                     aria-volumemax='100'
-                     style='width: 0%'>
-                  Hotelería
-                </div>
-              </div>
-            </td>
-
-            <td class='td-time'>
-              <div class='progress progress-striped active'>
-                <div class='progress-bar time-in-process'
-                     data-time='14397'
-                     style='width: 100%'>
-                </div>
-              </div>
-            </td>
-          </tr>
+              </td>
+            </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>

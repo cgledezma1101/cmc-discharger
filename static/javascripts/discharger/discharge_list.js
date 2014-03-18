@@ -45,6 +45,12 @@ $(document).ready(function(){
     $('.arrow_box').fadeOut();
   });
 
+  // Avoid hiding the arrow boxes when you click inside of them
+  $('.arrow_box').on('click', function(event){
+    event.preventDefault();
+    event.stopPropagation();
+  });
+
   // When a progress cell is clicked, show its' arrow box and hide the others
   $('.td-progress').on('click', function(event){
     event.preventDefault();
