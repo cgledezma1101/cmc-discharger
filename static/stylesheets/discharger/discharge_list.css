@@ -6,6 +6,7 @@
   display: none;
   padding: 10px 10px 10px 10px;
   position: absolute;
+  width: 200px;
   z-index: 2;
 }
 
@@ -47,6 +48,16 @@
 .progress-bar.time-in-process{
   font-size: 25px;
   padding: 10px 0 0 0;
+}
+
+.stage-checkbox-div > input{
+  float: left;
+  margin: 0 10px 0 0;
+  position: relative;
+}
+
+.stage-checkbox-div > span{
+  display: table;
 }
 
 .stage-name{

@@ -51,8 +51,20 @@
 
               <td class='td-progress'>
                 <div class='arrow_box'>
-                  Some content with more characters <br />
-                  And a line break
+                  <div class='arrow-box-header'>
+                    <h4> Administrar etapas </h4>
+                  </div>
+
+                  <hr />
+
+                  <div class='arrow-box-body'>
+                    {% for stage in discharge.stages.all %}
+                      <div class='stage-checkbox-div'>
+                        <input type='checkbox'/>
+                        <span>{{ stage.name }}</span>
+                      </div>
+                    {% endfor %}
+                  </div>
                 </div>
                 {% for stage in discharge.stages.all %}
                   <div 
