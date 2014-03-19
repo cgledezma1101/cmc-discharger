@@ -61,4 +61,19 @@ $(document).ready(function(){
       $('.arrow_box').fadeOut();
     }
   });
+
+  // When a checkbox for a stage is clicked, then the respective progress bar
+  // must be filled
+  $('.stage-checkbox-div > input').on('click', function(){
+    stages_id = $(this).attr('id');
+    is_checked = $(this).prop('checked');
+    var bars = $(this).closest('.arrow_box')
+                      .siblings('.progress')
+                      .find('.progress-bar#' + stages_id);
+    if(is_checked){
+      bars.css('width', '100%');
+    } else {
+      bars.css('width', '0%');
+    }
+  });
 });

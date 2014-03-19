@@ -60,7 +60,9 @@
                   <div class='arrow-box-body'>
                     {% for stage in discharge.stages.all %}
                       <div class='stage-checkbox-div'>
-                        <input type='checkbox'/>
+                        <input class='stage-checkbox'
+                               id='{{ stage.id }}'
+                               type='checkbox' />
                         <span>{{ stage.name }}</span>
                       </div>
                     {% endfor %}
@@ -81,6 +83,7 @@
                          'width: 
                            {{ discharge.stages.all | divide_in:600 }}px;'>
                     <div class='progress-bar'
+                         id='{{ stage.id }}'
                          role='progressbar'
                          style='width: 0%'>
                       <p class='stage-name'>
