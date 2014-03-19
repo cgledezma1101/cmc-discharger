@@ -19,14 +19,14 @@ class Discharge(models.Model):
 # passed. If exit_time is null, then the discharge is still on this stage
 class PassedBy(models.Model):
   discharge = models.ForeignKey('Discharge')
-  entry_time = models.DateTimeField()
+  entry_time = models.DateTimeField(null = True, blank = True)
   exit_time = models.DateTimeField(null = True, blank = True)
   stage = models.ForeignKey('Stage')
 
   # Printed representation of the object
   # return [String] The string representation of the object
   def __unicode__(self):
-    return self.discharge + ', Stage: ' + self.stage
+    return str(self.discharge) + ', Stage: ' + str(self.stage)
 
 # Stages through which a discharge process can passed. They are ordered by
 # a sequence number, which allows to tell, when a stage is done, which is the

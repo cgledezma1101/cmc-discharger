@@ -54,7 +54,7 @@
                   Some content with more characters <br />
                   And a line break
                 </div>
-                {% for stage in stages %}
+                {% for stage in discharge.stages.all %}
                   <div 
                     {% if forloop.first %}
                       class='progress first'
@@ -65,7 +65,9 @@
                         class='progress'
                       {% endif %}
                     {% endif %}
-                       style='width: {{ stage_size }}px;'>
+                       style=
+                         'width: 
+                           {{ discharge.stages.all | divide_in:600 }}px;'>
                     <div class='progress-bar'
                          role='progressbar'
                          style='width: 0%'>
