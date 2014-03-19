@@ -40,6 +40,20 @@ $(document).ready(function(){
   // Set the interval to increment timers every second
   setInterval(incrementTimers, 1000);
 
+  // Place the checked properties of the checkboxes to their appropriate values
+  $('.stage-checkbox-div > input').each(function(){
+    stages_id = $(this).attr('id')
+    associated_bar = $(this).closest('.arrow_box')
+                            .siblings('.progress')
+                            .find('.progress-bar#' + stages_id)
+                            .first();
+    if(associated_bar.css('width') == '0px'){
+      $(this).removeProp('checked');
+    } else {
+      $(this).prop('checked', 'checked');
+    }
+  });
+
   // Whenever any piece of the body is clicked, hide the arrow boxes
   $(document.body).on('click', function(){
     $('.arrow_box').fadeOut();

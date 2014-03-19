@@ -85,7 +85,7 @@
                     <div class='progress-bar'
                          id='{{ stage.id }}'
                          role='progressbar'
-                         style='width: 0%'>
+                         style='width: {{ discharge | progress_in:stage }}%'>
                       <p class='stage-name'>
                         {{ stage.name }}
                       </p>

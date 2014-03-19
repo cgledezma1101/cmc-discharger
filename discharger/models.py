@@ -11,9 +11,20 @@ class Discharge(models.Model):
   stages = models.ManyToManyField('Stage', through = 'PassedBy')
 
   # Printed representation of the object
-  # return [String] The string representation of the object
+  # @return [String] The string representation of the object
   def __unicode__(self):
     return 'Patient: ' + self.patient_name + ', Location: ' + self.location
+
+  # Determines whether this discharge passed by and finished the stage passed
+  # as parameter
+  # @param [Stage] stage The stage to be verified
+  # @return [Boolean] Whether the stage was completed or not
+  def finished_stage(self, stage):
+    association = PassedBy.objects.filter(discharge = self,
+                                          stage = stage)
+    if(association != None and association.exit_time != None):
+      return True
+    return False
 
 # Join table that represents a stage through which a discharge process has
 # passed. If exit_time is null, then the discharge is still on this stage
@@ -24,7 +35,7 @@ class PassedBy(models.Model):
   stage = models.ForeignKey('Stage')
 
   # Printed representation of the object
-  # return [String] The string representation of the object
+  # @return [String] The string representation of the object
   def __unicode__(self):
     return str(self.discharge) + ', Stage: ' + str(self.stage)
 
@@ -38,6 +49,6 @@ class Stage(models.Model):
   sequence_number = models.IntegerField()
 
   # Printed representation of the object
-  # return [String] The string representation of the object
+  # @return [String] The string representation of the object
   def __unicode__(self):
     return self.name
