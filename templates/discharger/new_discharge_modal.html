@@ -1,3 +1,9 @@
+<!-- 
+  This template renders a modal that contains a form that will allow the user
+  to create new discharges.
+
+  @param [NewDischargeForm] form The form object that will be rendered
+-->
 <div class='modal fade' id='newDischargeModal'>
   <div class='modal-dialog'>
     <div class='modal-header'>
@@ -7,6 +13,7 @@
     </div>
 
     <div class='modal-body'>
+      {% include 'discharger/forms/new_discharge_form.html' %}
     </div>
 
     <div class='modal-footer'>

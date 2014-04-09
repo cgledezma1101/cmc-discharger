@@ -1,0 +1,13 @@
+<!-- 
+  This template renders a formulaire with the fields that should be filled in
+  order to create a new discharge. The form will be submitted via javascript
+
+  @param [NewDischargeForm] form The form object that will be rendered
+-->
+<form action='#' method='post' remote='true'>
+  {% csrf_token %}
+  <label>
+    Field 1
+  </label>
+  <input type='text' placeholder='Value of the first field'/>
+</form>

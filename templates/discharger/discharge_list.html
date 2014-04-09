@@ -81,12 +81,12 @@
                 {% for stage in discharge.stages.all %}
                   <div 
                     {% if forloop.first %}
-                      class='progress first'
+                      class='progress progress-striped active first'
                     {% else %}
                       {% if forloop.last %}
-                        class='progress last'
+                        class='progress progress-striped active last'
                       {% else %}
-                        class='progress'
+                        class='progress progress-striped active'
                       {% endif %}
                     {% endif %}
                        style=
