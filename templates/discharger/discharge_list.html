@@ -26,6 +26,10 @@
   </script>
 {% endblock %}
 
+{% block modal %}
+  {% include 'discharger/new_discharge_modal.html' %}
+{% endblock %}
+
 {% block content %}
   {% load helper_filters %}
   <div class='panel panel-primary'>
@@ -34,6 +38,12 @@
     </div>
 
     <div class='panel-body'>
+      <div class='option-buttons'>
+        <a class='btn' data-toggle='modal' href='#newDischargeModal'>
+          <input type='submit' class='btn' value='Nueva alta' />
+        </a>
+      </div>
+
       <table class='table table-striped table-hover'>
         <tbody>
           <tr>

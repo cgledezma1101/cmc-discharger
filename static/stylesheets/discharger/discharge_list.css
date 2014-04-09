@@ -37,6 +37,22 @@
 
 /* End of arrow box */
 
+.modal-dialog{
+  background-color: white;
+  border-radius: 20px;
+}
+.option-buttons{
+  float: right;
+  padding: 0 0 10px 0;
+  position: relative;
+  width: auto;
+}
+
+.option-buttons a{
+  color: black;
+  weight: lighter;
+}
+
 .progress{
   height: 35px;
 }
