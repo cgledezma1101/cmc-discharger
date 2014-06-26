@@ -41,7 +41,7 @@ $(document).ready(function(){
   setInterval(incrementTimers, 1000);
 
   // Place the checked and disabled properties of the checkboxes to their
-  // appropriate values
+  // appropriate values, overriding whatever firefox remembers
   $('.stage-checkbox').each(function(){
     checkbox = $(this);
     stages_id = checkbox.attr('id')
@@ -50,12 +50,8 @@ $(document).ready(function(){
                              .find('.progress-bar#' + stages_id)
                              .first();
     if(checkbox.data('should-disable') == "1"){
-      console.log('Disabling');
-      console.log(checkbox);
       checkbox.prop('disabled', 'disbaled');
     } else {
-      console.log('Enabling');
-      console.log(checkbox);
       checkbox.prop('disabled', false);
     }
 
@@ -105,13 +101,12 @@ $(document).ready(function(){
 
       enable_next = true;
       // First check if there are any stages left with the same sequence number
-      same_sequence_query = '.stage-checkbox-div[data-sequence-number=]' +
-                            sequence_number;
-      console.log($(same_sequence_query))
-      $(same_sequence_query).each(function(){
+      same_sequence_query = '.stage-checkbox-div[data-sequence-number=' +
+                            sequence_number + ']';
+      same_sequence_divs = $(this).parent().siblings(same_sequence_query)
+      same_sequence_divs.each(function(){
         stages_checkbox = $(this).children('.stage-checkbox')
-        if((stages_checkbox.attr('id') != stages_id) &&
-           (!stages_checkbox.prop('checked'))){
+        if(!stages_checkbox.prop('checked')){
           enable_next = false;
           return false;
         }
@@ -122,10 +117,11 @@ $(document).ready(function(){
       // next stage
       if(enable_next) {
         sequence_number += 1;
-        next_sequence_query = '.stage-checkbox-div[data-sequence-number=]' +
-                              sequence_number;
-        $(next_sequence_query).children('.stage-checkbox')
-                              .removeProp('disabled');
+        next_sequence_query = '.stage-checkbox-div[data-sequence-number=' +
+                              sequence_number + ']';
+        next_sequence_divs = $(this).parent().siblings(next_sequence_query);
+        next_sequence_divs.children('.stage-checkbox')
+                          .prop('disabled', false);
       }
     } else {
       bars.css('width', '0%');
