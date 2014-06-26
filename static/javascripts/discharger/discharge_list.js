@@ -32,6 +32,7 @@ function incrementTimers(){
     
     bar.data('time', seconds_waiting);
     bar.text(timer);
+    return true;
   });
 };
 
