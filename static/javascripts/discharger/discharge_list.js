@@ -40,17 +40,29 @@ $(document).ready(function(){
   // Set the interval to increment timers every second
   setInterval(incrementTimers, 1000);
 
-  // Place the checked properties of the checkboxes to their appropriate values
+  // Place the checked and disabled properties of the checkboxes to their
+  // appropriate values
   $('.stage-checkbox').each(function(){
-    stages_id = $(this).attr('id')
-    associated_bar = $(this).closest('.arrow_box')
-                            .siblings('.progress')
-                            .find('.progress-bar#' + stages_id)
-                            .first();
-    if(associated_bar.css('width') == '0px'){
-      $(this).removeProp('checked');
+    checkbox = $(this);
+    stages_id = checkbox.attr('id')
+    associated_bar = checkbox.closest('.arrow_box')
+                             .siblings('.progress')
+                             .find('.progress-bar#' + stages_id)
+                             .first();
+    if(checkbox.data('should-disable') == "1"){
+      console.log('Disabling');
+      console.log(checkbox);
+      checkbox.prop('disabled', 'disbaled');
     } else {
-      $(this).prop('checked', 'checked');
+      console.log('Enabling');
+      console.log(checkbox);
+      checkbox.prop('disabled', false);
+    }
+
+    if(associated_bar.css('width') == '0px'){
+      checkbox.prop('checked', false);
+    } else {
+      checkbox.prop('checked', 'checked');
     }
   });
 
@@ -77,15 +89,44 @@ $(document).ready(function(){
   });
 
   // When a checkbox for a stage is clicked, then the respective progress bar
-  // must be filled
-  $('.stage-checkbox-div > input').on('click', function(){
-    stages_id = $(this).attr('id');
-    is_checked = $(this).prop('checked');
+  // must be filled and the appropriate checkboxes must be enabled
+  $('.stage-checkbox').on('click', function(){
+    var stages_id = $(this).attr('id');
+    var is_checked = $(this).prop('checked');
     var bars = $(this).closest('.arrow_box')
                       .siblings('.progress')
                       .find('.progress-bar#' + stages_id);
+    var sequence_number = +($(this).parent().data('sequence-number'))
     if(is_checked){
       bars.css('width', '100%');
+      // Disable the checkbox that was clicked and enable the next ones when
+      // appropriate
+      $(this).prop('disabled', 'disabled');
+
+      enable_next = true;
+      // First check if there are any stages left with the same sequence number
+      same_sequence_query = '.stage-checkbox-div[data-sequence-number=]' +
+                            sequence_number;
+      console.log($(same_sequence_query))
+      $(same_sequence_query).each(function(){
+        stages_checkbox = $(this).children('.stage-checkbox')
+        if((stages_checkbox.attr('id') != stages_id) &&
+           (!stages_checkbox.prop('checked'))){
+          enable_next = false;
+          return false;
+        }
+        return true;
+      })
+
+      // If all checkboxes of the same stage where checked, then enable the
+      // next stage
+      if(enable_next) {
+        sequence_number += 1;
+        next_sequence_query = '.stage-checkbox-div[data-sequence-number=]' +
+                              sequence_number;
+        $(next_sequence_query).children('.stage-checkbox')
+                              .removeProp('disabled');
+      }
     } else {
       bars.css('width', '0%');
     }
