@@ -41,7 +41,7 @@ $(document).ready(function(){
   setInterval(incrementTimers, 1000);
 
   // Place the checked properties of the checkboxes to their appropriate values
-  $('.stage-checkbox-div > input').each(function(){
+  $('.stage-checkbox').each(function(){
     stages_id = $(this).attr('id')
     associated_bar = $(this).closest('.arrow_box')
                             .siblings('.progress')

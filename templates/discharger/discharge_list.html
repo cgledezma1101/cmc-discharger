@@ -5,10 +5,6 @@
   Parameters:
     [list<Discharge>] discharges A list of all the discharges that will be
       displayed
-    [list<Stage>] stages A list of all the stages that a discharge has to go
-      through
-    [int] stage_size The size in pixels that a stage's navigation bar should
-      occupy
 {% endcomment %}
 
 {% block title %}Listado de altas{% endblock %}
@@ -58,9 +54,13 @@
                   <hr />
 
                   <div class='arrow-box-body'>
-                    {% for stage in discharge.stages.all %}
-                      <div class='stage-checkbox-div'>
+                    {% for stage in discharge.ordered_stages %}
+                      <div class='stage-checkbox-div'
+                           data-sequence-number={{ stage.sequence_number }}>
                         <input class='stage-checkbox'
+                               {% if stage.sequence_number != discharge.current_stage_number %}
+                                 disabled = 'disabled'
+                               {% endif %}
                                id='{{ stage.id }}'
                                type='checkbox' />
                         <span>{{ stage.name }}</span>
@@ -69,7 +69,7 @@
                   </div>
                 </div>
 
-                {% for stage in discharge.stages.all %}
+                {% for stage in discharge.ordered_stages %}
                   <div 
                     {% if forloop.first %}
                       class='progress active first'
@@ -96,7 +96,7 @@
               </td>
 
               <td class='td-time'>
-                <div class='progress progress-striped active'>
+                <div class='progress'>
                   <div 
                     class='progress-bar time-in-process'
                     data-time=
