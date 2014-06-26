@@ -26,10 +26,6 @@
   </script>
 {% endblock %}
 
-{% block modal %}
-  {% include 'discharger/modals/new_discharge_modal.html' %}
-{% endblock %}
-
 {% block content %}
   {% load helper_filters %}
   <div class='panel panel-primary'>
@@ -38,12 +34,6 @@
     </div>
 
     <div class='panel-body'>
-      <div class='option-buttons'>
-        <a class='btn' data-toggle='modal' href='#newDischargeModal'>
-          <input type='submit' class='btn' value='Nueva alta' />
-        </a>
-      </div>
-
       <table class='table table-striped table-hover'>
         <tbody>
           <tr>
@@ -78,15 +68,16 @@
                     {% endfor %}
                   </div>
                 </div>
+
                 {% for stage in discharge.stages.all %}
                   <div 
                     {% if forloop.first %}
-                      class='progress progress-striped active first'
+                      class='progress active first'
                     {% else %}
                       {% if forloop.last %}
-                        class='progress progress-striped active last'
+                        class='progress active last'
                       {% else %}
-                        class='progress progress-striped active'
+                        class='progress active'
                       {% endif %}
                     {% endif %}
                        style=
