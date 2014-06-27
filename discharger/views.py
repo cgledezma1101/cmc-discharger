@@ -7,6 +7,8 @@ from django.core import serializers;
 import json
 
 import datetime
+
+# This includes the 'time(seconds)' function, which is useful for debugging AJAX
 import time
 
 # GET /discharger/discharges/:discharge_id/complete_stage/:stage_id

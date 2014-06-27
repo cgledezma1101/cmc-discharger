@@ -58,11 +58,11 @@
                       <div class='stage-checkbox-div'
                            data-sequence-number={{ stage.sequence_number }}>
                         <input class='stage-checkbox'
-                               {% if stage.sequence_number != discharge.current_stage_number %}
+                          {% if stage.sequence_number != discharge.current_stage_number %}
                                  data-should-disable=1
-                               {% else %}
+                          {% else %}
                                  data-should-disable=0
-                               {% endif %}
+                          {% endif %}
                                id='{{ stage.id }}'
                                type='checkbox' />
                         {% load staticfiles %}

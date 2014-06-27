@@ -50,16 +50,17 @@ $(document).ready(function(){
                              .siblings('.progress')
                              .find('.progress-bar#' + stages_id)
                              .first();
-    if(checkbox.data('should-disable') == "1"){
-      checkbox.prop('disabled', 'disbaled');
-    } else {
-      checkbox.prop('disabled', false);
-    }
-
     if(associated_bar.css('width') == '0px'){
       checkbox.prop('checked', false);
     } else {
       checkbox.prop('checked', 'checked');
+    }
+
+    if((checkbox.data('should-disable') == "1") ||
+       (checkbox.prop('checked'))){
+      checkbox.prop('disabled', 'disbaled');
+    } else {
+      checkbox.prop('disabled', false);
     }
   });
 
