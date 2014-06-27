@@ -65,8 +65,9 @@
                                {% endif %}
                                id='{{ stage.id }}'
                                type='checkbox' />
-                        <div class='loader'>
-                        </div>
+                        {% load staticfiles %}
+                        <img class='loader'
+                             src='{% static "images/ajax-loader.gif" %}'>
                         <span>{{ stage.name }}</span>
                       </div>
                     {% endfor %}

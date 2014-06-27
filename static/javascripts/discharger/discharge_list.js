@@ -98,6 +98,11 @@ $(document).ready(function(){
       var request_url = '/discharger/discharges/' + discharge_id +
                         '/complete_stage/' + stage_id;
       
+      // Hide the checkbox and show the loader
+      loader = checkbox.siblings('.loader');
+      loader.show();
+      checkbox.hide();
+
       $.get(request_url, function(){
         var bars = checkbox.closest('.arrow_box')
                            .siblings('.progress')
@@ -134,6 +139,11 @@ $(document).ready(function(){
         }
       }).fail(function(){
         checkbox.prop('checked', false);
+      }).always(function(){
+        // Fail or success, the checkbox must always be shown again and the
+        // loader must always be hidden
+        loader.hide();
+        checkbox.show();
       });
     }
   });

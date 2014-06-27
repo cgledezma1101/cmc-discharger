@@ -7,6 +7,7 @@ from django.core import serializers;
 import json
 
 import datetime
+import time
 
 # GET /discharger/discharges/:discharge_id/complete_stage/:stage_id
 #

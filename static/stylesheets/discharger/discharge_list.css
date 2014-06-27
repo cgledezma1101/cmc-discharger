@@ -37,6 +37,14 @@
 
 /* End of arrow box */
 
+.loader{
+  display: none;
+  float: left;
+  height: 15px;
+  margin-right: 10px;
+  width: auto;
+}
+
 .modal-dialog{
   background-color: white;
   border-radius: 20px;
