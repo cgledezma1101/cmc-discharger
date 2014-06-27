@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from discharger.models import *
+from django.http import HttpResponse
 
 # To return JSON responses
 from django.core import serializers;
 import json
+
+import datetime
 
 # GET /discharger/discharges/:discharge_id/complete_stage/:stage_id
 #
@@ -13,8 +16,21 @@ import json
 # @param [int] discharge_id The identifier of the discharge where the stage
 #   will be completed.
 # @param [int] stage_id The stage being completed.
-def complete_stage(discharge_id, stage_id):
-  return HttpResponse(json.dumps([]),
+def complete_stage(request, discharge_id, stage_id):
+  stage = Stage.objects.get(id = stage_id)
+  discharge = Discharge.objects.get(id = discharge_id)
+
+  # Mark the current stage as ended
+  PassedBy.objects.filter(discharge = discharge,
+                                 stage = stage) \
+                  .update(exit_time = datetime.datetime.now())
+
+  # Mark the next stages as started
+  PassedBy.objects \
+          .filter(discharge__id = discharge_id,
+                  stage__sequence_number = (stage.sequence_number + 1)) \
+          .update(entry_time = datetime.datetime.now())
+  return HttpResponse(json.dumps(1),
                       content_type = 'application/json')
 
 # GET /discharger/list

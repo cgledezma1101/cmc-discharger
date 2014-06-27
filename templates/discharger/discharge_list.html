@@ -40,7 +40,7 @@
           </tr>
 
           {% for discharge in discharges %}
-            <tr>
+            <tr data-discharge-id={{ discharge.id }}>
               <td>{{ discharge.location }}</td>
 
               <td>{{ discharge.patient_name }}</td>
@@ -65,7 +65,8 @@
                                {% endif %}
                                id='{{ stage.id }}'
                                type='checkbox' />
-                        <div class='loader'/>
+                        <div class='loader'>
+                        </div>
                         <span>{{ stage.name }}</span>
                       </div>
                     {% endfor %}

@@ -88,44 +88,53 @@ $(document).ready(function(){
   // When a checkbox for a stage is clicked, then the respective progress bar
   // must be filled and the appropriate checkboxes must be enabled
   $('.stage-checkbox').on('click', function(){
-    var stages_id = $(this).attr('id');
-    var is_checked = $(this).prop('checked');
-    var bars = $(this).closest('.arrow_box')
-                      .siblings('.progress')
-                      .find('.progress-bar#' + stages_id);
-    var sequence_number = +($(this).parent().data('sequence-number'))
+    var checkbox = $(this)
+    var is_checked = checkbox.prop('checked');
+    var sequence_number = +(checkbox.parent().data('sequence-number'))
     if(is_checked){
-      bars.css('width', '100%');
-      // Disable the checkbox that was clicked and enable the next ones when
-      // appropriate
-      $(this).prop('disabled', 'disabled');
+      // If the checkbox was marked, perform the JSON call to complete the stage
+      var discharge_id = +(checkbox.parents('tr').data('discharge-id'));
+      var stage_id = checkbox.attr('id');
+      var request_url = '/discharger/discharges/' + discharge_id +
+                        '/complete_stage/' + stage_id;
+      
+      $.get(request_url, function(){
+        var bars = checkbox.closest('.arrow_box')
+                           .siblings('.progress')
+                           .find('.progress-bar#' + stage_id);
+        bars.css('width', '100%');
+        // Disable the checkbox that was clicked and enable the next ones when
+        // appropriate
+        checkbox.prop('disabled', 'disabled');
 
-      enable_next = true;
-      // First check if there are any stages left with the same sequence number
-      same_sequence_query = '.stage-checkbox-div[data-sequence-number=' +
-                            sequence_number + ']';
-      same_sequence_divs = $(this).parent().siblings(same_sequence_query)
-      same_sequence_divs.each(function(){
-        stages_checkbox = $(this).children('.stage-checkbox')
-        if(!stages_checkbox.prop('checked')){
-          enable_next = false;
-          return false;
-        }
-        return true;
-      })
-
-      // If all checkboxes of the same stage where checked, then enable the
-      // next stage
-      if(enable_next) {
-        sequence_number += 1;
-        next_sequence_query = '.stage-checkbox-div[data-sequence-number=' +
+        enable_next = true;
+        // First check if there are any stages left with the same sequence number
+        same_sequence_query = '.stage-checkbox-div[data-sequence-number=' +
                               sequence_number + ']';
-        next_sequence_divs = $(this).parent().siblings(next_sequence_query);
-        next_sequence_divs.children('.stage-checkbox')
-                          .prop('disabled', false);
-      }
-    } else {
-      bars.css('width', '0%');
+        same_sequence_divs = checkbox.parent().siblings(same_sequence_query)
+        same_sequence_divs.each(function(){
+          stages_checkbox = $(this).children('.stage-checkbox')
+          if(!stages_checkbox.prop('checked')){
+            enable_next = false;
+            return false;
+          }
+          return true;
+        })
+
+        // If all checkboxes of the same stage where checked, then enable the
+        // next stage
+        if(enable_next) {
+          sequence_number += 1;
+          next_sequence_query = '.stage-checkbox-div[data-sequence-number=' +
+                                sequence_number + ']';
+          next_sequence_divs = checkbox.parent()
+                                       .siblings(next_sequence_query)
+                                       .children('.stage-checkbox')
+                                       .prop('disabled', false);
+        }
+      }).fail(function(){
+        checkbox.prop('checked', false);
+      });
     }
   });
 });
