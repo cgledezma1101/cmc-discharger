@@ -9,5 +9,5 @@ import discharger
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.login),
-    url(r'^discharger/', include('discharger.urls'))
+    url(r'^altas/', include('discharger.urls'))
 )

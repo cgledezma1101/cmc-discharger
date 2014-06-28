@@ -2,16 +2,68 @@ from django.shortcuts import render
 from discharger.models import *
 from django.http import HttpResponse
 
+# Important database operations
+from django.db import IntegrityError, transaction
+
 # To return JSON responses
 from django.core import serializers;
 import json
 
+# Useful date functions
 import datetime
 
 # This includes the 'time(seconds)' function, which is useful for debugging AJAX
 import time
 
-# GET /discharger/discharges/:discharge_id/complete_stage/:stage_id
+# POST /altas/agregar?id_cama=:id_cama&
+#                     nombre_cama=:nombre_cama&
+#                     nombre_paciente=:nombre_paciente
+#
+# URL that allows the addition of new discharges into the system
+#
+# @param [int] id_cama Identifier of the discharge
+# @param [String] nombre_cama A name for the location where the patient will be
+#   placed
+# @param [String] nombre_paciente The name of the patient starting the discharge
+#   process
+#
+# @return [int] A JSON integer, having 1 if the process was OK, and 0 otherwise
+def add_discharge(request):
+  # Retrieve the post parameters
+  discharge_id = int(request.GET.get('id_cama', ''))
+  location = request.GET.get('nombre_cama', '')
+  patient_name = request.GET.get('nombre_paciente', '')
+  return_code = 1
+
+  if not Discharge.objects.filter(id = discharge_id):
+    # Build the new discharge object
+    discharge = Discharge(id = discharge_id,
+                          location = location,
+                          patient_name = patient_name,
+                          start_time = datetime.datetime.now())
+
+    # Save all the necessary instances in one transaction. If anything goes
+    # wrong nothing is saved
+    try:
+      with transaction.atomic():
+        discharge.save()
+        for stage in Stage.objects.all():
+          passed_by = PassedBy(discharge = discharge,
+                               stage = stage)
+          # If this is the first stage, start it
+          if stage.sequence_number == 0:
+            passed_by.entry_time = datetime.datetime.now()
+
+          passed_by.save()
+    except IntegrityError:
+      return_code = 0
+  else:
+    return_code = 0
+
+  return HttpResponse(json.dumps(return_code),
+                      content_type = 'application/json')
+
+# GET /altas/discharges/:discharge_id/complete_stage/:stage_id
 #
 # Marks a stage as completed under a particular discharge. This call answers
 # to javascript requests only.
@@ -44,7 +96,7 @@ def complete_stage(request, discharge_id, stage_id):
   return HttpResponse(json.dumps(return_code),
                       content_type = 'application/json')
 
-# GET /discharger/list
+# GET /altas/list
 #
 # Renders the list of all the unfinished discharges in the system.
 #

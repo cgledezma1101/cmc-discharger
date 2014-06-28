@@ -96,7 +96,7 @@ $(document).ready(function(){
       // If the checkbox was marked, perform the JSON call to complete the stage
       var discharge_id = +(checkbox.parents('tr').data('discharge-id'));
       var stage_id = checkbox.attr('id');
-      var request_url = '/discharger/discharges/' + discharge_id +
+      var request_url = '/altas/discharges/' + discharge_id +
                         '/complete_stage/' + stage_id;
       
       // Hide the checkbox and show the loader
