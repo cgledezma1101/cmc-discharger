@@ -28,12 +28,20 @@ def complete_stage(request, discharge_id, stage_id):
                                  stage = stage) \
                   .update(exit_time = datetime.datetime.now())
 
-  # Mark the next stages as started
-  PassedBy.objects \
-          .filter(discharge__id = discharge_id,
-                  stage__sequence_number = (stage.sequence_number + 1)) \
-          .update(entry_time = datetime.datetime.now())
-  return HttpResponse(json.dumps(1),
+  next_stages = \
+    PassedBy.objects \
+            .filter(discharge__id = discharge_id,
+                    stage__sequence_number = (stage.sequence_number + 1))
+  if not next_stages:
+    # Here there are no more stages, so mark this discharge as finished
+    discharge.end_time = datetime.datetime.now()
+    discharge.save()
+    return_code = 2
+  else:
+    next_stages.update(entry_time = datetime.datetime.now())
+    return_code = 1
+
+  return HttpResponse(json.dumps(return_code),
                       content_type = 'application/json')
 
 # GET /discharger/list

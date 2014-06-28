@@ -104,7 +104,7 @@ $(document).ready(function(){
       loader.show();
       checkbox.hide();
 
-      $.get(request_url, function(){
+      $.getJSON(request_url, function(return_code){
         var bars = checkbox.closest('.arrow_box')
                            .siblings('.progress')
                            .find('.progress-bar#' + stage_id);
@@ -113,30 +113,41 @@ $(document).ready(function(){
         // appropriate
         checkbox.prop('disabled', 'disabled');
 
-        enable_next = true;
-        // First check if there are any stages left with the same sequence number
-        same_sequence_query = '.stage-checkbox-div[data-sequence-number=' +
-                              sequence_number + ']';
-        same_sequence_divs = checkbox.parent().siblings(same_sequence_query)
-        same_sequence_divs.each(function(){
-          stages_checkbox = $(this).children('.stage-checkbox')
-          if(!stages_checkbox.prop('checked')){
-            enable_next = false;
-            return false;
-          }
-          return true;
-        })
-
-        // If all checkboxes of the same stage where checked, then enable the
-        // next stage
-        if(enable_next) {
-          sequence_number += 1;
-          next_sequence_query = '.stage-checkbox-div[data-sequence-number=' +
+        if(return_code == 1){
+          // A return code of 1 means the record still has more stages to
+          // complete
+          enable_next = true;
+          // First check if there are any stages left with the same sequence
+          // number
+          same_sequence_query = '.stage-checkbox-div[data-sequence-number=' +
                                 sequence_number + ']';
-          next_sequence_divs = checkbox.parent()
-                                       .siblings(next_sequence_query)
-                                       .children('.stage-checkbox')
-                                       .prop('disabled', false);
+          same_sequence_divs = checkbox.parent().siblings(same_sequence_query)
+          same_sequence_divs.each(function(){
+            stages_checkbox = $(this).children('.stage-checkbox')
+            if(!stages_checkbox.prop('checked')){
+              enable_next = false;
+              return false;
+            }
+            return true;
+          })
+
+          // If all checkboxes of the same stage where checked, then enable the
+          // next stage
+          if(enable_next) {
+            sequence_number += 1;
+            next_sequence_query = '.stage-checkbox-div[data-sequence-number=' +
+                                  sequence_number + ']';
+            next_sequence_divs = checkbox.parent()
+                                         .siblings(next_sequence_query)
+                                         .children('.stage-checkbox')
+                                         .prop('disabled', false);
+          }
+        } else if(return_code == 2) {
+          // A return code of 2 means there are no more stages to complete
+          container = checkbox.parents('tr');
+          container.fadeOut('slow', function(){
+            container.remove();
+          })
         }
       }).fail(function(){
         checkbox.prop('checked', false);
