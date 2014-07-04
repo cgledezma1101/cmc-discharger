@@ -124,3 +124,17 @@ th{
   font-weight: lighter;
   text-align: center;
 }
+
+.username-container{
+  bottom: 10px;
+  float: right;
+  position: relative;
+}
+
+.username-container > a:link{
+  color: white;
+}
+
+.username-container > a:visited{
+  color: white;
+}

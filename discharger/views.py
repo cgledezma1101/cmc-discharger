@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from discharger.models import *
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 # Important database operations
 from django.db import IntegrityError, transaction
@@ -101,6 +102,7 @@ def complete_stage(request, discharge_id, stage_id):
 # Renders the list of all the unfinished discharges in the system.
 #
 # @return [QuerySet<Discharge>] discharges: All the discharges to be displayed.
+@login_required
 def discharge_list(request):
   # Retrieve all the discharges that haven't ended
   discharges = Discharge.objects.filter(end_time__isnull = True) \

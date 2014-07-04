@@ -13,20 +13,24 @@
     </div>
 
     <div class='panel-body'>
+      {% if form.errors %}
+        <p class='error'>Usuario/Contraseña incorrectos</p>
+      {% endif %}
       <form method='post' action='#'>
         {% csrf_token %}
+        <input type='hidden' name='next' value='/altas/list'>
         <table>
           <tr>
             <td class='form-label'>Nombre de usuario:</td>
             <td>
-              <input type='text' name='username' />
+              <input type='text' name='username' value='' id='username'/>
             </td>
           </tr>
 
           <tr>
             <td class='form-label'>Contraseña:</td>
             <td>
-              <input type='password' name='password' />
+              <input type='password' name='password' value='' id='password'/>
             </td>
           </tr>
 
