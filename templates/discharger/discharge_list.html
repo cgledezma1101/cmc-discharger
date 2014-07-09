@@ -47,6 +47,7 @@
             <th>PACIENTE</th>
             <th>ETAPA</th>
             <th>TIEMPO DE ALTA</th>
+            <th>
           </tr>
 
           {% for discharge in discharges %}
@@ -119,6 +120,14 @@
                     style='width: 100%'>
                   </div>
                 </div>
+              </td>
+
+              <td>
+                <img src='{% static "images/button-cancel.png" %}'
+                     class='cancel-button'
+                     title='Cancelar alta' />
+                <img class='loader'
+                     src='{% static "images/ajax-loader.gif" %}'>
               </td>
             </tr>
           {% endfor %}

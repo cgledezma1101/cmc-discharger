@@ -159,4 +159,32 @@ $(document).ready(function(){
       });
     }
   });
+
+  $('.cancel-button').on('click', function(event){
+    event.preventDefault();
+
+    clicked = $(this);
+    // Display the ajax loader while an answer is received
+    loader = clicked.siblings('.loader');
+    loader.show();
+    clicked.hide();
+
+    id = clicked.parents('tr').data('discharge-id')
+    request_url = '/altas/discharges/' + id + '/cancel'
+    $.getJSON(request_url, function(return_status){
+      if(return_status == 1){
+        clicked.parents('tr').fadeOut('slow', function(){
+          $(this).remove();
+        })
+      } else {
+        loader.hide();
+        clicked.show();
+        alert('Hubo un error al eliminar el alta. Inténtelo de nuevo más ' +
+              'tarde');
+      }
+    }).always(function(){
+      loader.hide();
+      clicked.show();
+    })
+  })
 });

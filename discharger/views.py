@@ -6,9 +6,10 @@ from django.contrib.auth.decorators import login_required
 # Important database operations
 from django.db import IntegrityError, transaction
 
-# To return JSON responses
+# To handle JSON requests and responses
 from django.core import serializers;
 import json
+import requests
 
 # Useful date functions
 import datetime
@@ -62,6 +63,26 @@ def add_discharge(request):
     return_code = 0
 
   return HttpResponse(json.dumps(return_code),
+                      content_type = 'application/json')
+
+# GET /altas/discharges/:discharge_id/cancel
+#
+# @param [int] id The identifier of the discharge to cancel
+def cancel_discharge(request, discharge_id):
+  discharge = Discharge.objects.get(id = discharge_id)
+
+  # First perform the remote request to undo the discharge
+  remote_url = 'http://localhost:3000/camas/revertir_alta'
+  response = requests.get(remote_url, params = { 'id_cama' : discharge_id })
+  status = response.json()
+
+  if status == 1:
+    # If the discharge was properly reverted, destroy the element and all of
+    # it's passed bys
+    PassedBy.objects.filter(discharge = discharge).delete()
+    discharge.delete()
+
+  return HttpResponse(json.dumps(status),
                       content_type = 'application/json')
 
 # GET /altas/discharges/:discharge_id/complete_stage/:stage_id

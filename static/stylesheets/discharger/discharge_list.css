@@ -37,6 +37,11 @@
 
 /* End of arrow box */
 
+.cancel-button{
+  height: 30px;
+  width: auto;
+}
+
 .loader{
   display: none;
   float: left;
@@ -90,6 +95,11 @@
   z-index: 1;
 }
 
+td{
+  padding: 30px 0 0 0 !important;
+  text-align: center;
+}
+
 .td-progress{
   width: 600px;
 }
@@ -115,9 +125,8 @@
   font-size: 80%;
 }
 
-td{
-  padding: 30px 0 0 0 !important;
-  text-align: center;
+.td-time > .progress{
+  margin: 0 10px 0 10px;
 }
 
 th{
