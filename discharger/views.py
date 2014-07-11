@@ -122,14 +122,16 @@ def complete_stage(request, discharge_id, stage_id):
     # Now try to tell the beds service that the bed has been freed
     try:
       request_url = BEDS_URL + 'camas/liberar_cama'
-      response = requests.get(request_url, { 'id_cama' : discharge_id })
+      response = requests.get(request_url, \
+                              params = { 'id_cama' : discharge_id })
       request_status = response.json()
 
       if request_status == 1:
         return_code = 2
       else:
         return_code = 3
-    except:
+    except Exception, e:
+      print e
       return_code = 3
   else:
     next_stages.update(entry_time = datetime.datetime.now())
