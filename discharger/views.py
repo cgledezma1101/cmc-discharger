@@ -17,6 +17,8 @@ import datetime
 # This includes the 'time(seconds)' function, which is useful for debugging AJAX
 import time
 
+BEDS_URL = 'http://localhost:3000/'
+
 # POST /altas/agregar?id_cama=:id_cama&
 #                     nombre_cama=:nombre_cama&
 #                     nombre_paciente=:nombre_paciente
@@ -72,9 +74,12 @@ def cancel_discharge(request, discharge_id):
   discharge = Discharge.objects.get(id = discharge_id)
 
   # First perform the remote request to undo the discharge
-  remote_url = 'http://localhost:3000/camas/revertir_alta'
-  response = requests.get(remote_url, params = { 'id_cama' : discharge_id })
-  status = response.json()
+  remote_url = BEDS_URL + 'camas/revertir_alta'
+  try:
+    response = requests.get(remote_url, params = { 'id_cama' : discharge_id })
+    status = response.json()
+  except:
+    status = 0
 
   if status == 1:
     # If the discharge was properly reverted, destroy the element and all of
@@ -93,6 +98,9 @@ def cancel_discharge(request, discharge_id):
 # @param [int] discharge_id The identifier of the discharge where the stage
 #   will be completed.
 # @param [int] stage_id The stage being completed.
+# @return [int] A JSON integer indicating the result of the operation. 1 for
+#   stage completed but there are still stages to go. 2 for stage completed and
+#   beds service notified. 3 for stage completed but bed service not notified.
 def complete_stage(request, discharge_id, stage_id):
   stage = Stage.objects.get(id = stage_id)
   discharge = Discharge.objects.get(id = discharge_id)
@@ -110,7 +118,19 @@ def complete_stage(request, discharge_id, stage_id):
     # Here there are no more stages, so mark this discharge as finished
     discharge.end_time = datetime.datetime.now()
     discharge.save()
-    return_code = 2
+
+    # Now try to tell the beds service that the bed has been freed
+    try:
+      request_url = BEDS_URL + 'camas/liberar_cama'
+      response = requests.get(request_url, { 'id_cama' : discharge_id })
+      request_status = response.json()
+
+      if request_status == 1:
+        return_code = 2
+      else:
+        return_code = 3
+    except:
+      return_code = 3
   else:
     next_stages.update(entry_time = datetime.datetime.now())
     return_code = 1

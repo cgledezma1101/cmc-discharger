@@ -142,14 +142,23 @@ $(document).ready(function(){
                                          .children('.stage-checkbox')
                                          .prop('disabled', false);
           }
-        } else if(return_code == 2) {
-          // A return code of 2 means there are no more stages to complete
+        } else {
+          if(return_code == 3){
+            // A return code of 3 means there are no more stages but the beds
+            // service couldn't be notified
+            alert('Se logró culminar la etapa, pero no se pudo contactar al ' +
+                  'servicio de camas. Por favor libere la cama manualmente ' +
+                  'cuando se encuentre disponible el servicio');
+          }
+
           container = checkbox.parents('tr');
           container.fadeOut('slow', function(){
             container.remove();
           })
         }
       }).fail(function(){
+        alert('Ha ocurrido un error tratando de guardar la etapa. Inténtelo ' +
+              ' de nuevo más tarde.');
         checkbox.prop('checked', false);
       }).always(function(){
         // Fail or success, the checkbox must always be shown again and the
