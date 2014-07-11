@@ -6,8 +6,19 @@
 -->
 <form action='#' method='post' remote='true'>
   {% csrf_token %}
-  <label>
-    Field 1
-  </label>
-  <input type='text' placeholder='Value of the first field'/>
+  <div>
+    <label>
+      Nombre de la cama:
+    </label>
+    <input type='text' class='js-location' placeholder='Hasta 10 caracteres'/>
+  </div>
+
+  <div>
+    <label>
+      Nombre del paciente:
+    </label>
+    <input type='text'
+           class='js-patient-name'
+           placeholder='Nombre del paciente'/>
+  </div>
 </form>

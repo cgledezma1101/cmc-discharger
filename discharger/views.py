@@ -34,34 +34,35 @@ BEDS_URL = 'http://localhost:3000/'
 # @return [int] A JSON integer, having 1 if the process was OK, and 0 otherwise
 def add_discharge(request):
   # Retrieve the post parameters
-  discharge_id = int(request.GET.get('id_cama', ''))
+  discharge_id = request.GET.get('id_cama', None)
   location = request.GET.get('nombre_cama', '')
   patient_name = request.GET.get('nombre_paciente', '')
   return_code = 1
 
-  if not Discharge.objects.filter(id = discharge_id):
-    # Build the new discharge object
-    discharge = Discharge(id = discharge_id,
+  if discharge_id == None:
+    discharge = Discharge(location = location,
+                          patient_name = patient_name,
+                          start_time = datetime.datetime.now())
+  else:
+    discharge = Discharge(id = int(discharge_id),
                           location = location,
                           patient_name = patient_name,
                           start_time = datetime.datetime.now())
 
-    # Save all the necessary instances in one transaction. If anything goes
-    # wrong nothing is saved
-    try:
-      with transaction.atomic():
-        discharge.save()
-        for stage in Stage.objects.all():
-          passed_by = PassedBy(discharge = discharge,
-                               stage = stage)
-          # If this is the first stage, start it
-          if stage.sequence_number == 0:
-            passed_by.entry_time = datetime.datetime.now()
+  # Save all the necessary instances in one transaction. If anything goes
+  # wrong nothing is saved
+  try:
+    with transaction.atomic():
+      discharge.save()
+      for stage in Stage.objects.all():
+        passed_by = PassedBy(discharge = discharge,
+                             stage = stage)
+        # If this is the first stage, start it
+        if stage.sequence_number == 0:
+          passed_by.entry_time = datetime.datetime.now()
 
-          passed_by.save()
-    except IntegrityError:
-      return_code = 0
-  else:
+        passed_by.save()
+  except IntegrityError:
     return_code = 0
 
   return HttpResponse(json.dumps(return_code),
