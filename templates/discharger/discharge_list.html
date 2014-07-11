@@ -24,21 +24,7 @@
 
 {% block content %}
   {% load helper_filters %}
-  <div class='panel panel-primary'>
-    <div class='panel-heading'>
-      <div>
-        <h1>
-          Listado de altas
-        </h1>
-        <span class='username-container'>
-          Bienvenido, {{ user.username }}.
-          <a href='/accounts/logout/'>
-            Cerrar sesión
-          </a>
-        </span>
-      </div>
-    </div>
-
+  <div class='panel'>
     <div class='panel-body'>
       <table class='table table-striped table-hover'>
         <tbody>

@@ -1,0 +1,20 @@
+.banner-logo{
+  float: left;
+  height: 60px;
+  padding: 10px 0 0 20px;
+  width: auto;
+}
+
+.username-container{
+  bottom: 10px;
+  float: right;
+  position: relative;
+}
+
+.username-container > a:link{
+  color: black;
+}
+
+.username-container > a:visited{
+  color: black;
+}

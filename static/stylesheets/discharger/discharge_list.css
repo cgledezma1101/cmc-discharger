@@ -66,6 +66,10 @@
   weight: lighter;
 }
 
+.panel{
+  padding-top: 100px;
+}
+
 .progress{
   height: 35px;
 }
@@ -132,18 +136,4 @@ td{
 th{
   font-weight: lighter;
   text-align: center;
-}
-
-.username-container{
-  bottom: 10px;
-  float: right;
-  position: relative;
-}
-
-.username-container > a:link{
-  color: white;
-}
-
-.username-container > a:visited{
-  color: white;
 }
