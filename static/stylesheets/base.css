@@ -7,14 +7,19 @@
 
 .username-container{
   bottom: 10px;
+  color: #008ebc;
   float: right;
+  font-weight: bold;
   position: relative;
 }
 
-.username-container > a:link{
-  color: black;
+.username-container > a{
+  color: #08c;
+  font-weight: normal;
+  text-decoration: none;
 }
 
-.username-container > a:visited{
-  color: black;
+.username-container a:hover, .username-container a:focus{
+  color: #005580;
+  text-decoration: underline;
 }

@@ -41,6 +41,38 @@ $(document).ready(function(){
   // Set the interval to increment timers every second
   setInterval(incrementTimers, 1000);
 
+  // Event that uses javascript to create a new discharge when the form id
+  // submitted
+  $('.submit-add-discharge').on('click', function(event){
+    event.preventDefault();
+
+    // As usual, first hide the clicked button and place a loader
+    loader = $(this).siblings('.loader');
+    loader.show();
+
+    body = $(this).parent().siblings('.modal-body');
+    patient_name = body.find('.js-patient-name').val();
+    location_name = body.find('.js-location').val();
+
+    params = 'nombre_cama=' + location_name +
+             '&nombre_paciente=' + patient_name;
+    request_url = 'http://localhost:8000/altas/agregar?' + params;
+
+    $.getJSON(request_url, function(return_code){
+      if(return_code == 1){
+        location.reload();
+      } else {
+        alert('Error al crear el alta. Por favor revise los datos ' +
+              'introducidos.');
+      }
+    }).always(function(){
+      loader.hide();
+    }).fail(function(){
+      alert('Error al conectarse con el servidor. Por favor inténtelo más ' +
+            'tarde')
+    })
+  })
+
   // Place the checked and disabled properties of the checkboxes to their
   // appropriate values, overriding whatever firefox remembers
   $('.stage-checkbox').each(function(){
