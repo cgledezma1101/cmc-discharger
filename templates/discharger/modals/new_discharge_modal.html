@@ -1,0 +1,27 @@
+<div class='modal fade' id='newDischargeModal'>
+  <div class='modal-dialog'>
+    <div class='modal-header'>
+      <h3 class='modal-title'>
+        Agregar una nueva alta
+      </h3>
+    </div>
+
+    <div class='modal-body'>
+      {% include 'discharger/forms/new_discharge_form.html' %}
+    </div>
+
+    <div class='modal-footer'>
+      <button class='btn btn-danger' data-dismiss='modal' type='button'>
+        Cancelar
+      </button>
+
+      <button class='btn btn-success submit-add-discharge'>
+        Agregar
+      </button>
+
+      {% load staticfiles %}
+      <img class='loader'
+           src='{% static "images/ajax-loader.gif" %}'>
+    </div>
+  </div>
+</div>

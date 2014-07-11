@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    {% load staticfiles %}
+    <link rel='stylesheet'
+          type='text/css'
+          href='{% static "stylesheets/bootstrap/bootstrap.min.css" %}' />
+    <link rel='stylesheet'
+          type='text/css'
+          href='{% static "stylesheets/base.css" %}' />
+    {% block stylesheets %}{% endblock %}
+
+    <script src='{% static "javascripts/jquery.js" %}'>
+    </script>
+    <script src='{% static "javascripts/bootstrap/bootstrap.min.js" %}'>
+    </script>
+    {% block javascripts %}{% endblock %}
+  </head>
+
+  <body>
+    <div class='container'>
+      <div class='row content-fix'>
+        {% block modal %}{% endblock %}
+      </div>
+    </div>
+    <div class='navbar navbar-default navbar-fixed-top'>
+      <img src='{% static "images/logo-tds.png" %}'
+           class='banner-logo'>
+      <h2>
+        <center>
+          {{ title }}
+        </center>
+      </h2>
+      {% if user.is_authenticated %}
+        <span class='username-container'>
+          {{ user.username }} (
+          <a href='/accounts/logout/'>
+            Cerrar sesión
+          </a>
+          )
+        </span>
+      {% endif %}
+    </div>
+    {% block content %}{% endblock %}
+  </body>
+</html>

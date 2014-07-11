@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% comment %}
+  This view displays the list of discharges that haven't ended.
+
+  Parameters:
+    [list<Discharge>] discharges A list of all the discharges that will be
+      displayed
+{% endcomment %}
+
+{% block title %}Listado de altas{% endblock %}
+
+{% block stylesheets %}
+  {% load staticfiles %}
+  <link rel='stylesheet'
+        type='text/css'
+        href='{% static "stylesheets/discharger/discharge_list.css" %}' />
+{% endblock %}
+
+{% block javascripts %}
+  {% load staticfiles %}
+  <script src='{% static "javascripts/discharger/discharge_list.js" %}'>
+  </script>
+{% endblock %}
+
+{% block modal %}
+  {% include 'discharger/modals/new_discharge_modal.html' %}
+{% endblock %}
+
+{% block content %}
+  {% load helper_filters %}
+  <div class='panel'>
+    <div class='panel-body'>
+      <div class='option-buttons'>
+        <a class='btn' data-toggle='modal' href='#newDischargeModal'>
+          <input type='submit' class='btn' value='Nueva alta'>
+        </a>
+      </div>
+      <table class='table table-striped table-hover'>
+        <tbody>
+          <tr>
+            <th>UBICACIÓN</th>
+            <th>PACIENTE</th>
+            <th>ETAPA</th>
+            <th>TIEMPO DE ALTA</th>
+            <th>
+          </tr>
+
+          {% for discharge in discharges %}
+            <tr data-discharge-id={{ discharge.id }}>
+              <td>{{ discharge.location }}</td>
+
+              <td>{{ discharge.patient_name }}</td>
+
+              <td class='td-progress'>
+                <div class='arrow_box'>
+                  <div class='arrow-box-header'>
+                    <h4> Administrar etapas </h4>
+                  </div>
+
+                  <hr />
+
+                  <div class='arrow-box-body'>
+                    {% for stage in discharge.ordered_stages %}
+                      <div class='stage-checkbox-div'
+                           data-sequence-number={{ stage.sequence_number }}>
+                        <input class='stage-checkbox'
+                          {% if stage.sequence_number != discharge.current_stage_number %}
+                                 data-should-disable=1
+                          {% else %}
+                                 data-should-disable=0
+                          {% endif %}
+                               id='{{ stage.id }}'
+                               type='checkbox' />
+                        {% load staticfiles %}
+                        <img class='loader'
+                             src='{% static "images/ajax-loader.gif" %}'>
+                        <span>{{ stage.name }}</span>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+
+                {% for stage in discharge.ordered_stages %}
+                  <div 
+                    {% if forloop.first %}
+                      class='progress active first'
+                    {% else %}
+                      {% if forloop.last %}
+                        class='progress active last'
+                      {% else %}
+                        class='progress active'
+                      {% endif %}
+                    {% endif %}
+                       style=
+                         'width: 
+                           {{ discharge.stages.all | divide_in:600 }}px;'>
+                    <div class='progress-bar'
+                         id='{{ stage.id }}'
+                         role='progressbar'
+                         style='width: {{ discharge | progress_in:stage }}%'>
+                      <p class='stage-name'>
+                        {{ stage.name }}
+                      </p>
+                    </div>
+                  </div>
+                {% endfor %}
+              </td>
+
+              <td class='td-time'>
+                <div class='progress'>
+                  <div 
+                    class='progress-bar time-in-process'
+                    data-time=
+                      '{{ discharge.start_time | seconds_from }}'
+                    style='width: 100%'>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                <img src='{% static "images/button-cancel.jpeg" %}'
+                     class='cancel-button'
+                     title='Cancelar alta' />
+                <img class='loader'
+                     src='{% static "images/ajax-loader.gif" %}'>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

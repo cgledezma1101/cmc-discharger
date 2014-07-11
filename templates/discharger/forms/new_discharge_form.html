@@ -1,0 +1,24 @@
+<!-- 
+  This template renders a formulaire with the fields that should be filled in
+  order to create a new discharge. The form will be submitted via javascript
+
+  @param [NewDischargeForm] form The form object that will be rendered
+-->
+<form action='#' method='post' remote='true'>
+  {% csrf_token %}
+  <div>
+    <label>
+      Nombre de la cama:
+    </label>
+    <input type='text' class='js-location' placeholder='Hasta 10 caracteres'/>
+  </div>
+
+  <div>
+    <label>
+      Nombre del paciente:
+    </label>
+    <input type='text'
+           class='js-patient-name'
+           placeholder='Nombre del paciente'/>
+  </div>
+</form>

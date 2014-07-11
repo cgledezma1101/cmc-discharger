@@ -1,0 +1,13 @@
+Activities
+
+Documentation on tools to be used - 3h
+Perform logical design of the application - 2h
+Implement the database according to the specifications previously designed - 2h
+Create a set of URLS that respond to the interaction with the system - 1h
+Implement the authentication system - 2h
+Implement a standard list view, in HTML for the partients being discharged - 5h
+Implement Javascript calls necessary to interact asynchronously with the lists - 5h
+Implement the view that displays the desired statistics - 4h
+Implement the controller actions that bring logic into the views -  8h
+Debugging and testing - 5h
+Installation on-site - 6h

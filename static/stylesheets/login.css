@@ -1,0 +1,13 @@
+.panel-primary{
+  /* Place the box in the middle of the screen */
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left: -200px;
+  margin-top: -98px;
+  width: 400px;
+}
+
+.btn{
+  margin-top: 20px;
+}

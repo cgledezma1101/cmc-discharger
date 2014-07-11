@@ -1,0 +1,25 @@
+.banner-logo{
+  float: left;
+  height: 60px;
+  padding: 10px 0 0 20px;
+  width: auto;
+}
+
+.username-container{
+  bottom: 10px;
+  color: #008ebc;
+  float: right;
+  font-weight: bold;
+  position: relative;
+}
+
+.username-container > a{
+  color: #08c;
+  font-weight: normal;
+  text-decoration: none;
+}
+
+.username-container a:hover, .username-container a:focus{
+  color: #005580;
+  text-decoration: underline;
+}
