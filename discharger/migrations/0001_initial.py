@@ -22,7 +22,7 @@ class Migration(SchemaMigration):
         db.create_table(u'discharger_passedby', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('discharge', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['discharger.Discharge'])),
-            ('entry_time', self.gf('django.db.models.fields.DateTimeField')()),
+            ('entry_time', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
             ('exit_time', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
             ('stage', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['discharger.Stage'])),
         ))
@@ -62,7 +62,7 @@ class Migration(SchemaMigration):
         u'discharger.passedby': {
             'Meta': {'object_name': 'PassedBy'},
             'discharge': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['discharger.Discharge']"}),
-            'entry_time': ('django.db.models.fields.DateTimeField', [], {}),
+            'entry_time': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'exit_time': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'stage': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['discharger.Stage']"})

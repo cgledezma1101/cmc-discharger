@@ -1,0 +1,139 @@
+/* CSS for boxes with arrows. Thanks to cssarrowplease.com */
+.arrow_box{ 
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  display: none;
+  padding: 10px 10px 10px 10px;
+  position: absolute;
+  width: 200px;
+  z-index: 2;
+}
+
+.arrow_box:after, .arrow_box:before{
+  bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.arrow_box:after{
+  border-color: rgba(255, 245, 245, 0);
+  border-bottom-color: #ffffff;
+  border-width: 15px;
+  margin-left: -15px;
+}
+
+.arrow_box:before{
+  border-color: rgba(0, 0, 0, 0);
+  border-bottom-color: #000000;
+  border-width: 18px;
+  margin-left: -18px;
+}
+
+/* End of arrow box */
+
+.cancel-button{
+  height: 30px;
+  width: auto;
+}
+
+.loader{
+  display: none;
+  float: left;
+  height: 15px;
+  margin-right: 10px;
+  width: auto;
+}
+
+.modal-dialog{
+  background-color: white;
+  border-radius: 20px;
+}
+.option-buttons{
+  float: right;
+  padding: 0 0 10px 0;
+  position: relative;
+  width: auto;
+}
+
+.option-buttons a{
+  color: black;
+  weight: lighter;
+}
+
+.panel{
+  padding-top: 100px;
+}
+
+.progress{
+  height: 35px;
+}
+
+.progress-bar{
+  padding: 5px 0 0 0;
+}
+
+.progress-bar.time-in-process{
+  font-size: 25px;
+  padding: 10px 0 0 0;
+}
+
+.stage-checkbox-div > input{
+  float: left;
+  margin: 0 10px 0 0;
+  position: relative;
+}
+
+.stage-checkbox-div > span{
+  display: table;
+}
+
+.stage-name{
+  margin-left: 10px;
+  position: absolute;
+  z-index: 1;
+}
+
+td{
+  padding: 30px 0 0 0 !important;
+  text-align: center;
+}
+
+.td-progress{
+  width: 600px;
+}
+
+.td-progress > .progress{
+  border-radius: 0;
+  float: left;
+  position: relative;
+}
+
+.td-progress > .progress.first{
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.td-progress > .progress.last{
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.td-progress > .progress > .progress-bar{
+  color: black;
+  font-size: 80%;
+}
+
+.td-time > .progress{
+  margin: 0 10px 0 10px;
+}
+
+th{
+  font-weight: lighter;
+  text-align: center;
+}
