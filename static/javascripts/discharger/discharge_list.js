@@ -213,16 +213,14 @@ $(document).ready(function(){
     id = clicked.parents('tr').data('discharge-id')
     request_url = '/altas/discharges/' + id + '/cancel'
     $.getJSON(request_url, function(return_status){
-      if(return_status == 1){
-        clicked.parents('tr').fadeOut('slow', function(){
-          $(this).remove();
-        })
-      } else {
-        loader.hide();
-        clicked.show();
-        alert('Hubo un error al eliminar el alta. Inténtelo de nuevo más ' +
-              'tarde');
+      if(return_status == 0){
+        // Beds server error
+        alert('No se pudo comunicar con el servidor de camas. Agregue la ' +
+              'cama manualmente cuando el mismo esté disponible');
       }
+      clicked.parents('tr').fadeOut('slow', function(){
+        $(this).remove();
+      })
     }).always(function(){
       loader.hide();
       clicked.show();

@@ -17,7 +17,7 @@ import datetime
 # This includes the 'time(seconds)' function, which is useful for debugging AJAX
 import time
 
-BEDS_URL = 'http://localhost:3000/'
+BEDS_URL = ''
 
 # POST /altas/agregar?id_cama=:id_cama&
 #                     nombre_cama=:nombre_cama&
@@ -82,9 +82,9 @@ def cancel_discharge(request, discharge_id):
   except:
     status = 0
 
-  if status == 1:
-    # If the discharge was properly reverted, destroy the element and all of
-    # it's passed bys
+  # If the discharge was properly reverted, destroy the element and all of
+  # it's passed bys atomically
+  with transaction.atomic():
     PassedBy.objects.filter(discharge = discharge).delete()
     discharge.delete()
 

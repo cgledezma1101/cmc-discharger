@@ -5,11 +5,11 @@ from django.contrib import admin
 admin.autodiscover()
 
 from cmc_discharger import views
-import discharger
+from discharger.views import discharge_list
 
 urlpatterns = patterns('',
+    url(r'$^', discharge_list),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', login),
     url(r'^altas/', include('discharger.urls')),
     url(r'^accounts/login/$', login),
     url(r'^accounts/logout/$', logout, { 'next_page' : '/accounts/login/' })
