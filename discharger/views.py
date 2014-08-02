@@ -14,7 +14,7 @@ import requests
 # Useful date functions
 import datetime
 
-# This includes the 'time(seconds)' function, which is useful for debugging AJAX
+# This includes the 'sleep(seconds)' function, which is useful for debugging AJAX
 import time
 
 BEDS_URL = ''
@@ -153,6 +153,22 @@ def discharge_list(request):
                                 .order_by('start_time')
   view_params = { 'discharges': discharges, 'title' : 'Listado de altas' }
   return render(request, 'discharger/discharge_list.html', view_params)
+
+# GET /altas/get_statistics?date_o=[:date_o]&date_f=[:date_f]
+#
+# Retrieves statistical information regarding the discharges stored on the
+# database between the given dates
+#
+# @param date_o Initial date of the search
+# @param date_f Final date of the search
+@login_required
+def get_statistics(request):
+  view_params = {}
+  time.sleep(5)
+  return render(request,
+                'discharger/statistics.js',
+                view_params,
+                content_type = 'text/javascript')
 
 # GET /altas/statistics
 #

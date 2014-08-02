@@ -56,5 +56,13 @@
     {% load staticfiles %}
     <img class='loader'
          src='{% static "images/ajax-loader.gif" %}' />
+    <div class='charts'>
+      <p>Tiempo promedio de alta:
+        <span class='average-discharge-time'></span>
+      </p>
+
+      <div class='incidence-per-stage'>
+      </div>
+    </div>
   </div>
 {% endblock %}
