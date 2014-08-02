@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% comment %}
+  Displays the main layout that shows statistics recolected on the discharge
+  system
+{% endcomment %}
+
+{% block stylesheets %}
+  {% load staticfiles %}
+  <link rel='stylesheet'
+        type='text/css'
+        href='{% static "stylesheets/discharger/statistics.css" %}'>
+{% endblock %}
+
+{% block javascripts %}
+  {% load staticfiles %}
+  <script src='{% static "javascripts/discharger/statistics.js" %}'>
+  </script>
+{% endblock %}
+
+{% block title %}Estadísticas{% endblock %}
+
+{% block content %}
+  <div class=panel>
+    <div class='panel-body'>
+      <div class='range-form'>
+        {% csrf_token %}
+        <form method='post' action='#' role='form'>
+          <div class='form-group'>
+            <label for='initialDate'>Fecha inicial:</label>
+            <input class='datepicker'
+                   type='date'
+                   id='initialDate'
+                   placeholder='Fecha inicial de la búsqueda' />
+          </div>
+          <div class='form-group'>
+            <label for='finalDate'>Fecha final:</label>
+            <input class='datepicker'
+                   type='date'
+                   id='finalDate'
+                   placeholder='Fecha final de la búsqueda' />
+          </div>
+          <button type='submit' class='btn btn-success'>
+            Buscar
+          </button>
+        </form>
+      </div>
+
+      <div class='statistics'>
+        {% load staticfiles %}
+        <img class='loader'
+             src='{% static "images/ajax-loader.gif" %}' />
+      </div>
+    </div>
+  </div>
+{% endblock %}

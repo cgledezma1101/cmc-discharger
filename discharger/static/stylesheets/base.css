@@ -5,6 +5,10 @@
   width: auto;
 }
 
+.container{
+  padding-bottom: 100px;
+}
+
 .username-container{
   bottom: 10px;
   color: #008ebc;

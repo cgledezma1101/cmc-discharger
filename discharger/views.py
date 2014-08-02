@@ -153,3 +153,11 @@ def discharge_list(request):
                                 .order_by('start_time')
   view_params = { 'discharges': discharges, 'title' : 'Listado de altas' }
   return render(request, 'discharger/discharge_list.html', view_params)
+
+# GET /altas/statistics
+#
+# Renders the page that shows the statistics associated to the discharge system
+@login_required
+def statistics(request):
+  view_params = { 'title' : 'Estadisticas' }
+  return render(request, 'discharger/statistics.html', view_params)
