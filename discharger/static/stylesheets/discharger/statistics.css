@@ -1,3 +1,13 @@
+.form-errors{
+  color: red;
+  padding-bottom: 15px;
+}
+
 .loader{
   display: none;
+}
+
+.range-form{
+  position: absolute;
+  z-index: 1;
 }
