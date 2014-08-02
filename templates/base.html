@@ -4,15 +4,15 @@
     {% load staticfiles %}
     <link rel='stylesheet'
           type='text/css'
-          href='{% static "stylesheets/bootstrap/bootstrap.min.css" %}' />
+          href='{% static "libraries/bootstrap/bootstrap.min.css" %}' />
     <link rel='stylesheet'
           type='text/css'
           href='{% static "stylesheets/base.css" %}' />
     {% block stylesheets %}{% endblock %}
 
-    <script src='{% static "javascripts/jquery.js" %}'>
+    <script src='{% static "libraries/jquery/jquery.js" %}'>
     </script>
-    <script src='{% static "javascripts/bootstrap/bootstrap.min.js" %}'>
+    <script src='{% static "libraries/bootstrap/bootstrap.min.js" %}'>
     </script>
     {% block javascripts %}{% endblock %}
   </head>
