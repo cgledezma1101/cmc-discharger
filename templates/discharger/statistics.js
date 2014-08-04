@@ -1,3 +1,18 @@
+/*
+  This template responds to the get_statistics call. It renders the average
+  waiting time for the discharges and a chart showing the incidence of each
+  stage on the discharge process.
+
+  @param int average_discharge_wait The average time in which discharges have
+    been fully attended
+  @param dict<str x List> chart_data A dictionary containing the information to
+    be printed on the chart. Each key here is the name of the stage described
+    and each value is an array of 4 positions, containing the amount of
+    discharges that passed by the corresponding stage in blue, yellow, red and
+    black conditions, respectively
+*/
+$('.statistics > .loader').hide();
+$('.statistics > .charts').show();
 // Build the chart to be shown
 $('#incidence-per-stage').highcharts({
   chart: {
@@ -73,5 +88,3 @@ $('#incidence-per-stage').highcharts({
 });
 
 $('#average-discharge-time').text('{{ average_discharge_wait }} horas');
-$('.statistics > .loader').hide();
-$('.statistics > .charts').show();
