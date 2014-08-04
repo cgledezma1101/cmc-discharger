@@ -9,6 +9,20 @@
   padding-bottom: 100px;
 }
 
+.navigation-links > a{
+  color: black;
+  font-weight: normal;
+  margin: 0 0 0 70px;
+  position: relative;
+  text-decoration: none;
+  top: 30px;
+}
+
+.navigation-links > a:hover, .navigation-links > a:focus{
+  color: black;
+  text-decoration: underline;
+}
+
 .username-container{
   bottom: 10px;
   color: #008ebc;

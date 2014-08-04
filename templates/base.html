@@ -24,22 +24,34 @@
       </div>
     </div>
     <div class='navbar navbar-default navbar-fixed-top'>
-      <img src='{% static "images/logo-tds.png" %}'
-           class='banner-logo'>
-      <h2>
-        <center>
-          {{ title }}
-        </center>
-      </h2>
-      {% if user.is_authenticated %}
-        <span class='username-container'>
-          {{ user.username }} (
-          <a href='/accounts/logout/'>
-            Cerrar sesión
+      <div class='navbar-inner'>
+        <a href='/'>
+          <img src='{% static "images/logo-tds.png" %}'
+               class='banner-logo'>
+        </a>
+        <span class='navigation-links'>
+          <a href='/altas/list'>
+            Listado
           </a>
-          )
+          <a href='/altas/statistics'>
+            Estadísticas
+          </a>
         </span>
-      {% endif %}
+        <h2>
+          <center>
+            {{ title }}
+          </center>
+        </h2>
+        {% if user.is_authenticated %}
+          <span class='username-container'>
+            {{ user.username }} (
+            <a href='/accounts/logout/'>
+              Cerrar sesión
+            </a>
+            )
+          </span>
+        {% endif %}
+      </div>
     </div>
     {% block content %}{% endblock %}
   </body>
