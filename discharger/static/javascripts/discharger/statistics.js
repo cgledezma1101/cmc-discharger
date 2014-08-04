@@ -27,6 +27,6 @@ $(document).ready(function(){
     $('.statistics > .loader').show();
     request_params = 'date_o=' + date_o + '&date_f=' + date_f;
     request_url = '/altas/get_statistics?' + request_params
-    $.getScript(request_url);
+    $.getScript(request_url)
   })
 })

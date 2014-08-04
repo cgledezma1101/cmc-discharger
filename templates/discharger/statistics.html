@@ -20,6 +20,8 @@
   </script>
   <script src={% static "libraries/jquery-ui/jquery-ui.min.js" %}>
   </script>
+  <script src={% static "libraries/highcharts/js/highcharts.js" %}>
+  </script>
 {% endblock %}
 
 {% block title %}Estadísticas{% endblock %}
@@ -35,7 +37,7 @@
         <input class='datepicker'
                type='text'
                id='initialDate'
-               placeholder='Fecha inicial de la búsqueda' />
+               placeholder='mm/dd/yyyy' />
       </div>
 
       <div class='form-group'>
@@ -43,7 +45,7 @@
         <input class='datepicker'
                type='text'
                id='finalDate'
-               placeholder='Fecha final de la búsqueda' />
+               placeholder='mm/dd/yyyy' />
       </div>
 
       <button id='search-submit' type='submit' class='btn btn-success'>
@@ -58,10 +60,10 @@
          src='{% static "images/ajax-loader.gif" %}' />
     <div class='charts'>
       <p>Tiempo promedio de alta:
-        <span class='average-discharge-time'></span>
+        <span id='average-discharge-time'></span>
       </p>
 
-      <div class='incidence-per-stage'>
+      <div id='incidence-per-stage'>
       </div>
     </div>
   </div>

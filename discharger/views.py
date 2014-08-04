@@ -163,8 +163,52 @@ def discharge_list(request):
 # @param date_f Final date of the search
 @login_required
 def get_statistics(request):
-  view_params = {}
-  time.sleep(5)
+  # First retrieve the given dates and parse them
+  date_o = datetime.datetime.strptime(request.GET['date_o'], '%m/%d/%Y')
+  date_f = datetime.datetime.strptime(request.GET['date_f'], '%m/%d/%Y')
+
+  # Retrieve all discharges and passed bys
+  discharges = Discharge.objects.filter(end_time__isnull = False,
+                                        end_time__gte = date_o,
+                                        end_time__lte = date_f)
+  passed_bys = PassedBy.objects.filter(exit_time__isnull = False,
+                                       exit_time__gte = date_o,
+                                       exit_time__lte = date_f)
+
+  # Calculate the average waiting time of the discharges in hours
+  total_discharges = discharges.count()
+  if total_discharges != 0:
+    discharge_wait_times = \
+      map(lambda d: (d.end_time - d.start_time).total_seconds(), discharges)
+    discharges_wait_time = reduce(lambda t0, t1: t0 + t1, discharge_wait_times)
+
+    average_discharge_wait = \
+      round((discharges_wait_time / total_discharges) / 3600, 2)
+  else:
+    average_discharge_wait = 0
+
+  # Prepare the data for the charts. The data dictionary will contain as key the
+  # name of each stage passed by and as value an array containing 4 elements.
+  # These represent, for such stage, the amount of passed bys finished in blue,
+  # yellow, red and black respectively
+  chart_data = {}
+  for passed_by in passed_bys:
+    stage_name = passed_by.stage.name
+    if stage_name not in chart_data:
+      chart_data[stage_name] = [0, 0, 0, 0]
+    wait_time = (passed_by.exit_time - passed_by.entry_time).total_seconds()
+    if wait_time < 7200:
+      chart_data[stage_name][0] += 1
+    elif 7200 <= wait_time and wait_time < 14400:
+      chart_data[stage_name][1] += 1
+    elif 14400 <= wait_time and wait_time < 21600:
+      chart_data[stage_name][2] += 1
+    else:
+      chart_data[stage_name][3] += 1
+
+  print(chart_data)
+  view_params = { 'average_discharge_wait' : average_discharge_wait,
+                  'chart_data' : chart_data }
   return render(request,
                 'discharger/statistics.js',
                 view_params,
