@@ -132,7 +132,6 @@ def complete_stage(request, discharge_id, stage_id):
       else:
         return_code = 3
     except Exception, e:
-      print e
       return_code = 3
   else:
     next_stages.update(entry_time = datetime.datetime.now())
@@ -172,6 +171,7 @@ def get_statistics(request):
                                         end_time__gte = date_o,
                                         end_time__lte = date_f)
   passed_bys = PassedBy.objects.filter(exit_time__isnull = False,
+                                       entry_time__isnull = False,
                                        exit_time__gte = date_o,
                                        exit_time__lte = date_f)
 
@@ -206,7 +206,6 @@ def get_statistics(request):
     else:
       chart_data[stage_name][3] += 1
 
-  print(chart_data)
   view_params = { 'average_discharge_wait' : average_discharge_wait,
                   'chart_data' : chart_data }
   return render(request,

@@ -56,7 +56,7 @@ $(document).ready(function(){
 
     params = 'nombre_cama=' + location_name +
              '&nombre_paciente=' + patient_name;
-    request_url = 'http://localhost:8001/altas/agregar?' + params;
+    request_url = '/altas/agregar?' + params;
 
     $.getJSON(request_url, function(return_code){
       if(return_code == 1){

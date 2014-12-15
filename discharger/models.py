@@ -13,7 +13,7 @@ class Discharge(models.Model):
   # Printed representation of the object
   # @return [String] The string representation of the object
   def __unicode__(self):
-    return 'Patient: ' + self.patient_name + ', Location: ' + self.location
+    return ('Patient: ' + self.patient_name + ', Location: ' + self.location).encode('ascii', 'ignore')
 
   # Determines the sequence number of the stage the discharge is currently in
   # @return [int] The sequence number of the current stage, or None if the
@@ -58,7 +58,7 @@ class PassedBy(models.Model):
   # Printed representation of the object
   # @return [String] The string representation of the object
   def __unicode__(self):
-    return str(self.discharge) + ', Stage: ' + str(self.stage)
+    return (str(self.discharge) + ', Stage: ' + str(self.stage)).encode('ascii', 'ignore')
 
 # Stages through which a discharge process can passed. They are ordered by
 # a sequence number, which allows to tell, when a stage is done, which is the
@@ -72,4 +72,4 @@ class Stage(models.Model):
   # Printed representation of the object
   # @return [String] The string representation of the object
   def __unicode__(self):
-    return self.name
+    return self.name.encode('ascii', 'ignore')
