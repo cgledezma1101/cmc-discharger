@@ -37,7 +37,6 @@ INSTALLED_APPS = (
   'django.contrib.messages',
   'django.contrib.staticfiles',
   'discharger', # Main discharging appliaction
-  'south', # This is a migration manager
 )
 
 MIDDLEWARE_CLASSES = (
